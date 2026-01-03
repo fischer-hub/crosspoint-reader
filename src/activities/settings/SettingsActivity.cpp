@@ -9,7 +9,7 @@
 
 // Define the static settings list
 namespace {
-constexpr int settingsCount = 12;
+constexpr int settingsCount = 15;
 const SettingInfo settingsList[settingsCount] = {
     // Should match with SLEEP_SCREEN_MODE
     {"Sleep Screen", SettingType::ENUM, &CrossPointSettings::sleepScreen, {"Dark", "Light", "Custom", "Cover"}},
@@ -35,6 +35,18 @@ const SettingInfo settingsList[settingsCount] = {
     {"Reader Font Size", SettingType::ENUM, &CrossPointSettings::fontSize, {"Small", "Medium", "Large", "X Large"}},
     {"Reader Line Spacing", SettingType::ENUM, &CrossPointSettings::lineSpacing, {"Tight", "Normal", "Wide"}},
     {"Reader Screen Margin", SettingType::ENUM, &CrossPointSettings::screenMargin, {"S", "M", "L", "XL"}},
+    {"Reader Paragraph Alignment",
+     SettingType::ENUM,
+     &CrossPointSettings::paragraphAlignment,
+     {"Justify", "Left", "Center", "Right"}},
+    {"Time to Sleep",
+     SettingType::ENUM,
+     &CrossPointSettings::sleepTimeout,
+     {"1 min", "5 min", "10 min", "15 min", "30 min"}},
+    {"Refresh Frequency",
+     SettingType::ENUM,
+     &CrossPointSettings::refreshFrequency,
+     {"1 page", "5 pages", "10 pages", "15 pages", "30 pages"}},
     {"Check for updates", SettingType::ACTION, nullptr, {}},
 };
 }  // namespace
