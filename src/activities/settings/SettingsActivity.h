@@ -20,23 +20,28 @@ struct SettingInfo {
   uint8_t CrossPointSettings::* valuePtr;  // Pointer to member in CrossPointSettings (for TOGGLE/ENUM/VALUE)
   std::vector<std::string> enumValues;
 
-  // Bounds for VALUE type settings
-  int8_t minValue;
-  uint8_t maxValue;
+  struct ValueRange {
+    uint8_t min;
+    uint8_t max;
+    uint8_t step;
+  };
+  // Bounds/step for VALUE type settings
+  ValueRange valueRange;
+
 
   // Static constructors
   static SettingInfo Toggle(const char* name, uint8_t CrossPointSettings::* ptr) {
-    return {name, SettingType::TOGGLE, ptr, {}, 0, 0};
+    return {name, SettingType::TOGGLE, ptr};
   }
 
   static SettingInfo Enum(const char* name, uint8_t CrossPointSettings::* ptr, std::vector<std::string> values) {
-    return {name, SettingType::ENUM, ptr, std::move(values), 0, 0};
+    return {name, SettingType::ENUM, ptr, std::move(values)};
   }
 
-  static SettingInfo Action(const char* name) { return {name, SettingType::ACTION, nullptr, {}, 0, 0}; }
+  static SettingInfo Action(const char* name) { return {name, SettingType::ACTION, nullptr}; }
 
-  static SettingInfo Value(const char* name, uint8_t CrossPointSettings::* ptr, int8_t minValue, uint8_t maxValue) {
-    return {name, SettingType::VALUE, ptr, {}, minValue, maxValue};
+  static SettingInfo Value(const char* name, uint8_t CrossPointSettings::* ptr, const ValueRange valueRange) {
+    return {name, SettingType::VALUE, ptr, {}, valueRange};
   }
 };
 

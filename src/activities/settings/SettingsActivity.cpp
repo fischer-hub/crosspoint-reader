@@ -27,7 +27,7 @@ const SettingInfo settingsList[settingsCount] = {
                       {"Bookerly", "Noto Sans", "Open Dyslexic"}),
     SettingInfo::Enum("Reader Font Size", &CrossPointSettings::fontSize, {"Small", "Medium", "Large", "X Large"}),
     SettingInfo::Enum("Reader Line Spacing", &CrossPointSettings::lineSpacing, {"Tight", "Normal", "Wide"}),
-    SettingInfo::Value("Reader Screen Margin", &CrossPointSettings::screenMargin, 5, 50),
+    SettingInfo::Value("Reader Screen Margin", &CrossPointSettings::screenMargin, { 5, 50, 5 }),
     SettingInfo::Enum("Reader Paragraph Alignment", &CrossPointSettings::paragraphAlignment,
                       {"Justify", "Left", "Center", "Right"}),
     SettingInfo::Enum("Time to Sleep", &CrossPointSettings::sleepTimeout,
@@ -53,7 +53,7 @@ void SettingsActivity::onEnter() {
   updateRequired = true;
 
   xTaskCreate(&SettingsActivity::taskTrampoline, "SettingsActivityTask",
-              2048,               // Stack size
+              4096,               // Stack size
               this,               // Parameters
               1,                  // Priority
               &displayTaskHandle  // Task handle
@@ -125,10 +125,10 @@ void SettingsActivity::toggleCurrentSetting() {
     // Decreasing would also be nice for large ranges I think but oh well can't have everything
     const int8_t currentValue = SETTINGS.*(setting.valuePtr);
     // Wrap to minValue if exceeding setting value boundary
-    if (currentValue == setting.maxValue) {
-      SETTINGS.*(setting.valuePtr) = setting.minValue;
+    if (currentValue + setting.valueRange.step > setting.valueRange.max) {
+      SETTINGS.*(setting.valuePtr) = setting.valueRange.min;
     } else {
-      SETTINGS.*(setting.valuePtr) = currentValue + 1;
+      SETTINGS.*(setting.valuePtr) = currentValue + setting.valueRange.step;
     }
   } else if (setting.type == SettingType::ACTION) {
     if (std::string(setting.name) == "Check for updates") {
