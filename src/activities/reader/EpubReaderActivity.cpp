@@ -153,8 +153,8 @@ void EpubReaderActivity::loop() {
                             mappedInput.wasReleased(MappedInputManager::Button::Left);
   const bool nextReleased =
       mappedInput.wasReleased(MappedInputManager::Button::PageForward) ||
-      (SETTINGS.pwrBtnTurn && !SETTINGS.shortPwrBtn && mappedInput.wasReleased(MappedInputManager::Button::Power) &&
-       mappedInput.getHeldTime() < goHomeMs) ||
+      (SETTINGS.shortPwrBtn == CrossPointSettings::SHORT_PWRBTN::PAGE_TURN &&
+       mappedInput.wasReleased(MappedInputManager::Button::Power) && mappedInput.getHeldTime() < goHomeMs) ||
       mappedInput.wasReleased(MappedInputManager::Button::Right);
 
   if (!prevReleased && !nextReleased) {
