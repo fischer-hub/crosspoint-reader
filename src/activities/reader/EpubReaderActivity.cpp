@@ -151,9 +151,11 @@ void EpubReaderActivity::loop() {
 
   const bool prevReleased = mappedInput.wasReleased(MappedInputManager::Button::PageBack) ||
                             mappedInput.wasReleased(MappedInputManager::Button::Left);
-  const bool nextReleased = mappedInput.wasReleased(MappedInputManager::Button::PageForward) ||
-                            (SETTINGS.pwrBtnTurn && mappedInput.wasReleased(MappedInputManager::Button::Power)) ||
-                            mappedInput.wasReleased(MappedInputManager::Button::Right);
+  const bool nextReleased =
+      mappedInput.wasReleased(MappedInputManager::Button::PageForward) ||
+      (SETTINGS.pwrBtnTurn && !SETTINGS.shortPwrBtn && mappedInput.wasReleased(MappedInputManager::Button::Power) &&
+       mappedInput.getHeldTime() < goHomeMs) ||
+      mappedInput.wasReleased(MappedInputManager::Button::Right);
 
   if (!prevReleased && !nextReleased) {
     return;
