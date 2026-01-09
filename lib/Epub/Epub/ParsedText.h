@@ -18,6 +18,15 @@ class ParsedText {
   TextBlock::Style style;
   bool extraParagraphSpacing;
 
+  void applyParagraphIndent();
+  std::vector<int> hyphenPoints(const std::string& w);
+  std::vector<size_t> computeHyphenatedLineBreaks(const GfxRenderer& renderer, const int fontId,
+                                                            const int pageWidth, const int spaceWidth,
+                                                            std::vector<uint16_t>& wordWidths);
+  bool hyphenateWordAtIndex(const size_t wordIndex, const int availableWidth, const GfxRenderer& renderer,
+                                      const int fontId, std::vector<uint16_t>& wordWidths,
+                                      const bool allowFallbackBreaks);
+
   std::vector<size_t> computeLineBreaks(int pageWidth, int spaceWidth, const std::vector<uint16_t>& wordWidths) const;
   void extractLine(size_t breakIndex, int pageWidth, int spaceWidth, const std::vector<uint16_t>& wordWidths,
                    const std::vector<size_t>& lineBreakIndices,
