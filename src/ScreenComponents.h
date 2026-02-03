@@ -4,6 +4,8 @@
 #include <cstdint>
 #include <vector>
 
+#include "Battery.h"
+
 class GfxRenderer;
 
 struct TabInfo {
@@ -14,6 +16,8 @@ struct TabInfo {
 class ScreenComponents {
  public:
   static const int BOOK_PROGRESS_BAR_HEIGHT = 4;
+
+  static BatteryPercentageRingBuffer batteryBuffer;
 
   struct PopupLayout {
     int x;
