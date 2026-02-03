@@ -10,8 +10,8 @@ void BatteryPercentageRingBuffer::init(uint16_t v) {
 }
 
 void BatteryPercentageRingBuffer::update(uint16_t v) {
-  // Previous percentage is set to 161 only if buffer was constructed but not initialized yet
-  if (!prev_val) {
+  // Previous percentage is set > 100 only if buffer was constructed but not initialized yet
+  if (prev_val > 100) {
     init(v);
   }
 
@@ -30,7 +30,7 @@ uint16_t BatteryPercentageRingBuffer::evaluate() {
   float avg = (sum / MAX_SAMPLES) + 0.5;
   uint16_t new_val = (int)avg;
 
-  // Battery percentage should not increse when not charging so we just cap it to be lower than the last value
+  // Battery percentage should not increase when not charging so we just cap it to be lower than the last value
   if (new_val < prev_val) {
     prev_val = new_val;
     return new_val;

@@ -13,7 +13,7 @@ struct BatteryPercentageRingBuffer {
   uint16_t buf[MAX_SAMPLES];
   uint16_t head = 0;
   uint16_t sum = 0;
-  uint16_t prev_val = 0;
+  uint16_t prev_val = 161;
 
   void init(uint16_t value);
   void update(uint16_t value);
