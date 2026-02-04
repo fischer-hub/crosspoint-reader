@@ -17,8 +17,9 @@ void BatteryPercentageRingBuffer::update(uint8_t v) {
     was_charging = false;
   }
 
-  // Buffer was reintilialized with readout values while charging (can be too high values), reinit with new readout after charging 
-  if (was_charging){
+  // Buffer was reintilialized with readout values while charging (can be too high values), reinit with new readout
+  // after charging
+  if (was_charging) {
     init(v);
     was_charging = false;
   }
@@ -34,7 +35,6 @@ void BatteryPercentageRingBuffer::update(uint8_t v) {
 }
 
 uint8_t BatteryPercentageRingBuffer::evaluate() {
-  
   uint8_t new_val = (sum + MAX_SAMPLES / 2) / MAX_SAMPLES;
 
   // Battery percentage should not increase when not charging so we just cap it to be lower than the last value

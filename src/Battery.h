@@ -14,7 +14,7 @@ struct BatteryPercentageRingBuffer {
   uint8_t head = 0;
   uint16_t sum = 0;
   uint8_t prev_val = 161;
-  bool was_charging =false;
+  bool was_charging = false;
 
   void init(uint8_t value);
   void update(uint8_t value);
