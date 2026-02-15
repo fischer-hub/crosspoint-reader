@@ -16,6 +16,8 @@ UITheme::UITheme() : gpio(nullptr) {}
 UITheme::UITheme(HalGPIO& gpioRef) {
   auto themeType = static_cast<CrossPointSettings::UI_THEME>(SETTINGS.uiTheme);
   gpio = &gpioRef;
+  currentMetrics = nullptr;
+  currentTheme = nullptr;
   setTheme(themeType);
 }
 

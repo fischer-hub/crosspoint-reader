@@ -14,7 +14,7 @@ class UITheme {
 
  public:
   UITheme();
-  UITheme(HalGPIO& gpioRef);
+  explicit UITheme(HalGPIO& gpioRef);
   static UITheme& getInstance() { return instance; }
 
   const ThemeMetrics& getMetrics() { return *currentMetrics; }

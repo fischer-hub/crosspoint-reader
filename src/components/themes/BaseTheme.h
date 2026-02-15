@@ -91,7 +91,7 @@ constexpr ThemeMetrics values = {.batteryWidth = 15,
 
 class BaseTheme {
  public:
-  BaseTheme(HalGPIO* gpio = nullptr) : gpio(gpio) {}
+  explicit BaseTheme(HalGPIO* gpio = nullptr) : gpio(gpio) {}
   virtual ~BaseTheme() = default;
   HalGPIO* gpio;
   // Component drawing methods
